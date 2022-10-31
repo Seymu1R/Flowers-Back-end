@@ -14,5 +14,7 @@ namespace Front_to_back_Flowers.Dal
         public DbSet<FlowerImg> FlowerImages { get; set; }
         public DbSet<MarketingSlider> MarketingSliders { get; set; }
         public DbSet<SliderIndex> SliderIndexs { get; set; }
+        public DbSet<FlowerCategory> FlowerCategories { get; set; }
+        public DbSet<SliderImage> SliderImages { get; set; }
     }
 }

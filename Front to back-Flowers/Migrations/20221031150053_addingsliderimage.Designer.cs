@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Front_to_back_Flowers.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221031122352_changeacessmodifaer")]
-    partial class changeacessmodifaer
+    [Migration("20221031150053_addingsliderimage")]
+    partial class addingsliderimage
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,6 +31,9 @@ namespace Front_to_back_Flowers.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("FlowerCategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -39,7 +42,25 @@ namespace Front_to_back_Flowers.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FlowerCategoryId");
+
                     b.ToTable("Flowers");
+                });
+
+            modelBuilder.Entity("Front_to_back_Flowers.Models.FlowerCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FlowerCategories");
                 });
 
             modelBuilder.Entity("Front_to_back_Flowers.Models.FlowerExpert", b =>
@@ -101,7 +122,7 @@ namespace Front_to_back_Flowers.Migrations
                     b.ToTable("MarketingSliders");
                 });
 
-            modelBuilder.Entity("Front_to_back_Flowers.Models.SliderIndex", b =>
+            modelBuilder.Entity("Front_to_back_Flowers.Models.SliderImage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -109,8 +130,21 @@ namespace Front_to_back_Flowers.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("BackgraundImg")
+                    b.Property<string>("SliderPath")
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SliderImages");
+                });
+
+            modelBuilder.Entity("Front_to_back_Flowers.Models.SliderIndex", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("SmallImg")
                         .HasColumnType("nvarchar(max)");
@@ -124,6 +158,17 @@ namespace Front_to_back_Flowers.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SliderIndexs");
+                });
+
+            modelBuilder.Entity("Front_to_back_Flowers.Models.Flower", b =>
+                {
+                    b.HasOne("Front_to_back_Flowers.Models.FlowerCategory", "FlowerCategory")
+                        .WithMany()
+                        .HasForeignKey("FlowerCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FlowerCategory");
                 });
 
             modelBuilder.Entity("Front_to_back_Flowers.Models.FlowerImg", b =>

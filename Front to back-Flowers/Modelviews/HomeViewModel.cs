@@ -8,6 +8,8 @@ namespace Front_to_back_Flowers.Modelviews
         public List<FlowerExpert> FlowerExperts { get; set; }=new List<FlowerExpert>();
         public List<FlowerImg> FlowerImgs { get; set; } = new List<FlowerImg>();
         public List<MarketingSlider> MarketingSliders { get; set; } = new List<MarketingSlider>();
-        public List<SliderIndex> SliderIndexs { get; set; } = new List<SliderIndex>();
+        public SliderIndex SliderIndex { get; set; } = new SliderIndex();
+        public List<FlowerCategory> FlowerCategories { get; set; } = new List<FlowerCategory>();
+        public List<SliderImage> SliderImages { get; set; }
     }
 }

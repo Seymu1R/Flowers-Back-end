@@ -4,6 +4,8 @@
     {
         public string? Name { get; set; }
         public double Price { get; set; }
+        public int FlowerCategoryId { get; set; }
+        public FlowerCategory? FlowerCategory { get; set; }
         public List<FlowerImg>? FlowerImg { get; set; }
     }
 }

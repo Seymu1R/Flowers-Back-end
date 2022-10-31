@@ -4,10 +4,23 @@
 
 namespace Front_to_back_Flowers.Migrations
 {
-    public partial class FirstDb : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "FlowerCategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FlowerCategories", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "FlowerExperts",
                 columns: table => new
@@ -21,20 +34,6 @@ namespace Front_to_back_Flowers.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FlowerExperts", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Flowers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<double>(type: "float", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Flowers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -67,6 +66,27 @@ namespace Front_to_back_Flowers.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Flowers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    FlowerCategoryId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Flowers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Flowers_FlowerCategories_FlowerCategoryId",
+                        column: x => x.FlowerCategoryId,
+                        principalTable: "FlowerCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FlowerImages",
                 columns: table => new
                 {
@@ -90,6 +110,11 @@ namespace Front_to_back_Flowers.Migrations
                 name: "IX_FlowerImages_FlowerId",
                 table: "FlowerImages",
                 column: "FlowerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Flowers_FlowerCategoryId",
+                table: "Flowers",
+                column: "FlowerCategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -108,6 +133,9 @@ namespace Front_to_back_Flowers.Migrations
 
             migrationBuilder.DropTable(
                 name: "Flowers");
+
+            migrationBuilder.DropTable(
+                name: "FlowerCategories");
         }
     }
 }

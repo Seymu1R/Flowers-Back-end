@@ -23,13 +23,17 @@ namespace Front_to_back_Flowers.Controllers
             List<Flower> flowers = _dbcontext.Flowers.Include(fi => fi.FlowerImg).ToList();
             List<FlowerExpert> Fexperts = _dbcontext.FlowerExperts.ToList();
             var marketingsliders = _dbcontext.MarketingSliders.ToList();
-            var sliderindexs = _dbcontext.SliderIndexs.ToList();
+            var sliderindexs = _dbcontext.SliderIndexs.ToList().SingleOrDefault();
+            var fcategories = _dbcontext.FlowerCategories.ToList();
+            var sliderimages = _dbcontext.SliderImages.ToList();
             HomeViewModel viewmodel = new HomeViewModel()
             {
                 Flowers = flowers,
-                FlowerExperts=Fexperts,
-                MarketingSliders=marketingsliders,
-                SliderIndexs=sliderindexs,
+                FlowerExperts = Fexperts,
+                MarketingSliders = marketingsliders,
+                SliderIndex = sliderindexs,
+                FlowerCategories = fcategories,
+                SliderImages=sliderimages,
 
             };
 
