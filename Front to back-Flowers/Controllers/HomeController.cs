@@ -44,8 +44,13 @@ namespace Front_to_back_Flowers.Controllers
             List<Flower> flowers = _dbcontext.Flowers.Include(fi => fi.FlowerImg).ToList();
             return View(flowers);
         }
+        public IActionResult ProductDetail(int id)
+        {
+            Flower flower = _dbcontext.Flowers.Include(fi=>fi.FlowerImg).FirstOrDefault(fi=>fi.Id==id);
+            return View(flower);
+        }
 
-        
+
 
     }
        

@@ -1,0 +1,4 @@
+﻿@model Flower 
+<h1>@Model.Name</h1>
+<p>@Model.FlowerCategory.Name</p>
+<img src="~/img/@Model.FlowerImg.FirstOrDefault().ImgPath" />
